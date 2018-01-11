@@ -1398,3 +1398,5 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     };
     return share;
 });
+
+module.exports = 'angular-img-cropper';

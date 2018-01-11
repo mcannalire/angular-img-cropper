@@ -1330,7 +1330,8 @@ angular.module('angular-img-cropper', []).directive("imageCropper", ['$document'
 angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout', function ($timeout) {
     return {
         scope: {
-            image: "="
+            image: "=",
+            onUpload: '&',
         },
         link: function (scope, element) {
             element.bind("change", function (changeEvent) {
@@ -1338,6 +1339,7 @@ angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout
                 reader.onload = function (loadEvent) {
                     $timeout(function () {
                         scope.image = loadEvent.target.result;
+                        scope.onUpload({event: loadEvent});
                     }, 0);
                 };
                 if (changeEvent.target.files[0]) {

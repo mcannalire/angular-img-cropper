@@ -1086,9 +1086,9 @@ angular.module('angular-img-cropper', []).directive("imageCropper", ['$document'
                 ImageCropper.prototype.onTouchMove = function (e) {
                     if (crop.isImageSet()) {
                         e.preventDefault();
-                        if (e.touches.length >= 1) {
-                            for (var i = 0; i < e.touches.length; i++) {
-                                var touch = e.touches[i];
+                        if (e.originalEvent.touches.length >= 1) {
+                            for (var i = 0; i < e.originalEvent.touches.length; i++) {
+                                var touch = e.originalEvent.touches[i];
                                 var touchPosition = this.getTouchPos(this.canvas, touch);
                                 var cropTouch = new CropTouch(touchPosition.x, touchPosition.y, touch.identifier);
                                 PointPool.instance.returnPoint(touchPosition);
@@ -1188,14 +1188,15 @@ angular.module('angular-img-cropper', []).directive("imageCropper", ['$document'
                     return false;
                 };
                 ImageCropper.prototype.onTouchStart = function (e) {
+                    e.preventDefault();
                     if (crop.isImageSet()) {
                         this.isMouseDown = true;
                     }
                 };
                 ImageCropper.prototype.onTouchEnd = function (e) {
                     if (crop.isImageSet()) {
-                        for (var i = 0; i < e.changedTouches.length; i++) {
-                            var touch = e.changedTouches[i];
+                        for (var i = 0; i < e.originalEvent.changedTouches.length; i++) {
+                            var touch = e.originalEvent.changedTouches[i];
                             var dragTouch = this.getDragTouchForID(touch.identifier);
                             if (dragTouch != null) {
                                 if (dragTouch.dragHandle instanceof CornerMarker || dragTouch.dragHandle instanceof DragMarker) {
